@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Register</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="content">
+                <div class="Question">
+                    <form id="question-one" class="active" method="POST" action="{{ url_for('insert_question_one') }}">
+                        <h2>Q1 Insert a new tuple ('s2', 'p3', 200, 0.006) into SHIPMENT table </h2>
+                        <label class="form-label">Insert Sno</label>
+                            <input class="input-box" type="text" name="question-one-sno" required placeholder="Enter Sno">
+                        
+                        <label class="form-label">Enter Pno</label>
+                            <input class="input-box" type="text" name="question-one-pno" required placeholder="Enter Pno">
+                        <br>
+                        <label class="form-label">Enter Quantity </label>
+                            <input class="input-box" type="text" name="question-one-qty" required placeholder="Enter Quantity">
+
+                        <label class="form-label">Enter Price </label>
+                            <input class="input-box" type="text" name="question-one-price" required placeholder="Enter Price">
+                        <br>
+                        <button type="submit">Insert Shipment </button>
+                    </form>
+                </div>
+
+                <div class="Question">
+                    <form id="question-two" class="active" method="POST" action="{{ url_for('insert_question_two') }}">
+                        <h2>Q2 Insert a new tuple ('s4', 'p2', 100, 0.005) into SHIPMENT table </h2>
+                        <label class="form-label">Insert Sno</label>
+                            <input class="input-box" type="text" name="question-two-sno" required placeholder="Enter Sno">
+
+                        <label class="form-label">Enter Pno</label>
+                            <input class="input-box" type="text" name="question-two-pno" required placeholder="Enter Pno">
+                        <br>
+                        <label class="form-label">Enter Quantity </label>
+                            <input class="input-box" type="text" name="question-two-qty" required placeholder="Enter Quantity">
+
+                        <label class="form-label">Enter Price </label>
+                            <input class="input-box" type="text" name="question-two-price" required placeholder="Enter Price">
+                        <br>
+                        <button type="submit">Insert Shipment </button>
+                    </form>
+                </div>
+
+                <div class="Question">
+                    <form method="POST" action="{{ url_for('increase_by_10') }}">
+                        <h3>Increase the status of each supplier by 10%. </h3>
+                        <button type="submit">Increase Status </button>
+                    </form>
+                </div>
+
+                <div class="Question">
+                    <form method="POST" action="{{ url_for('display_supplier_info') }}">
+                        <h3>Display information of all suppliers. </h3>
+                        <button type="submit">Display </button>
+                    </form>
+                    
+                    
+                    {% if suppliers %}
+                    <div class="sup-table">
+                        <table class="supplier-table">
+                            <thead>
+                                <tr>
+                                    <th>Sno</th>
+                                    <th>Sname</th>
+                                    <th>Status</th>
+                                    <th>City</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {% for supplier in suppliers %}
+                                <tr>
+                                    <td>{{ supplier[0]  }}</td>
+                                    <td>{{ supplier[1]  }}</td>
+                                    <td>{{ supplier[2]  }}</td>
+                                    <td>{{ supplier[3]  }}</td>
+
+                                 </tr>
+                                {% endfor %}
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    {% else %}
+                    <div class="no-supplier">
+                        <p>Error: No Supplier Data </p>
+                    </div>
+                    {% endif %}
+                
+                </div>
+                <div class="Question">
+                     <form method="POST" action="{{ url_for('display_part_info') }}" >
+                        <h3>Prompt the user to input part no, and display information of all suppliers who shipped </h3>
+                            <label class="form-label">Enter Pno</label>
+                                <input class="input-box" type="text" name="question-five-pno" required placeholder="Enter Pno">
+                        <button type="submit">Insert Shipment </button>
+                    </form>
+                        {% if suppliers %}
+                        <div class="sup-table">
+                            <thead>
+                                <tr>
+                                    <th>Sno</th>
+                                    <th>Sname</th>
+                                    <th>Status</th>
+                                    <th>City</th>
+                                </tr>
+                                {% for supplier in suppliers %}
+                                <tr>
+                                    <td>{{ supplier[0] }}</td>
+                                    <td>{{ supplier[1] }}</td>
+                                    <td>{{ supplier[2] }}</td>
+                                    <td>{{ supplier[3] }}</td>
+                                    <br>
+                                </tr>
+                                {% endfor %}
+                            </thead>
+                        </div>
+                    {% else %}
+                    <div class="no-supplier">
+                        <p>Error: No Supplier Data </p>
+                    </div>
+                    {% endif %}
+                
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
