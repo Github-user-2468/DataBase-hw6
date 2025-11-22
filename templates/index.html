@@ -9,6 +9,17 @@
     <body>
         <div class="container">
             <div class="content">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <div class="flash-messages">
+                                {% for category, message in messages %}
+                                    <div class="flash-message flash-{{ category }}">
+                                        <i class="fas fa-info-circle"></i> {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
                 <div class="Question">
                     <form id="question-one" class="active" method="POST" action="{{ url_for('insert_question_one') }}">
                         <h2>Q1 Insert a new tuple ('s2', 'p3', 200, 0.006) into SHIPMENT table </h2>
@@ -24,7 +35,7 @@
                         <label class="form-label">Enter Price </label>
                             <input class="input-box" type="text" name="question-one-price" required placeholder="Enter Price">
                         <br>
-                        <button type="submit">Insert Shipment </button>
+                        <button class="sub-btn" type="submit">Insert Shipment </button>
                     </form>
                 </div>
 
@@ -43,91 +54,85 @@
                         <label class="form-label">Enter Price </label>
                             <input class="input-box" type="text" name="question-two-price" required placeholder="Enter Price">
                         <br>
-                        <button type="submit">Insert Shipment </button>
+                        <button class="sub-btn" type="submit">Insert Shipment </button>
                     </form>
                 </div>
 
                 <div class="Question">
                     <form method="POST" action="{{ url_for('increase_by_10') }}">
                         <h3>Increase the status of each supplier by 10%. </h3>
-                        <button type="submit">Increase Status </button>
+                        <button class="sub-btn" type="submit">Increase Status </button>
                     </form>
                 </div>
 
-                <div class="Question">
+                 <div class="Question">
                     <form method="POST" action="{{ url_for('display_supplier_info') }}">
                         <h3>Display information of all suppliers. </h3>
-                        <button type="submit">Display </button>
+                        <button class="sub-btn" type="submit">Display </button>
                     </form>
                     
-                    
-                    {% if suppliers %}
-                    <div class="sup-table">
-                        <table class="supplier-table">
-                            <thead>
-                                <tr>
-                                    <th>Sno</th>
-                                    <th>Sname</th>
-                                    <th>Status</th>
-                                    <th>City</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                {% for supplier in suppliers %}
-                                <tr>
-                                    <td>{{ supplier[0]  }}</td>
-                                    <td>{{ supplier[1]  }}</td>
-                                    <td>{{ supplier[2]  }}</td>
-                                    <td>{{ supplier[3]  }}</td>
-
-                                 </tr>
-                                {% endfor %}
-                               
-                            </tbody>
-                        </table>
+                    <div class="table-content">
+                        {% if suppliers %}
+                        <div class="sup-table">
+                            <table class="supplier-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sno</th>
+                                        <th>Sname</th>
+                                        <th>Status</th>
+                                        <th>City</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for supplier in suppliers %}
+                                    <tr>
+                                        <td>{{ supplier[0] }}</td>
+                                        <td>{{ supplier[1] }}</td>
+                                        <td>{{ supplier[2] }}</td>
+                                        <td>{{ supplier[3] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        {% endif %}
                     </div>
-                    
-                    {% else %}
-                    <div class="no-supplier">
-                        <p>Error: No Supplier Data </p>
-                    </div>
-                    {% endif %}
-                
                 </div>
                 <div class="Question">
                      <form method="POST" action="{{ url_for('display_part_info') }}" >
                         <h3>Prompt the user to input part no, and display information of all suppliers who shipped </h3>
                             <label class="form-label">Enter Pno</label>
                                 <input class="input-box" type="text" name="question-five-pno" required placeholder="Enter Pno">
-                        <button type="submit">Insert Shipment </button>
+                        <button class="sub-btn" type="submit">Search for Supplier </button>
                     </form>
-                        {% if suppliers %}
+                <div class="table-content">
+                        {% if supplier_for_parts  %}
                         <div class="sup-table">
-                            <thead>
-                                <tr>
-                                    <th>Sno</th>
-                                    <th>Sname</th>
-                                    <th>Status</th>
-                                    <th>City</th>
-                                </tr>
-                                {% for supplier in suppliers %}
-                                <tr>
-                                    <td>{{ supplier[0] }}</td>
-                                    <td>{{ supplier[1] }}</td>
-                                    <td>{{ supplier[2] }}</td>
-                                    <td>{{ supplier[3] }}</td>
-                                    <br>
-                                </tr>
-                                {% endfor %}
-                            </thead>
+                            <table class="supplier-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sno</th>
+                                        <th>Sname</th>
+                                        <th>Status</th>
+                                        <th>City</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for supplier_for_part in supplier_for_parts %}
+                                    <tr>
+                                        <td>{{ supplier_for_part[0] }}</td>
+                                        <td>{{ supplier_for_part[1] }}</td>
+                                        <td>{{ supplier_for_part[2] }}</td>
+                                        <td>{{ supplier_for_part[3] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
-                    {% else %}
-                    <div class="no-supplier">
-                        <p>Error: No Supplier Data </p>
+                        
+                        {% endif %}
                     </div>
-                    {% endif %}
-                
                 </div>
             </div>
         </div>

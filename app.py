@@ -1,6 +1,9 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template, flash, redirect, url_for
 import pymysql
+import os
 app = Flask(__name__)
+app.secret_key = os.urandom(12)
+
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -136,9 +139,11 @@ def insert_question_one():
             mysql.commit()
 
             cur.close
-            return "Data inserted successfully"
+            flash('Data Inserted successfully', 'success')
+            return redirect(url_for('index'))
         except Exception as e:
-            return f"Error Inserting Data: {e}"
+            flash(f'Error Inserting Data: {e}', 'error')
+            return render_template('index.html')
     return render_template('index.html')
 
 
@@ -159,9 +164,11 @@ def insert_question_two():
 
 
             cur.close()
-            return "Data inserted successfully"
+            flash('Shipment sucessfully inserted', 'success')
+            return redirect(url_for('index'))
         except Exception as e:
-            return f"Error Inserting Data: {e}"
+            flash(f'Error Inserting Data: {e}', 'error')
+            return render_template('index.html')
     return render_template('index.html')
 
     
@@ -178,9 +185,11 @@ def increase_by_10():
 
             cur.close()
 
-            return "Status updated sucessfully"
+            flash('Status Sucessfully Increased!', 'success')
+            return render_template('index.html')
         except Exception as e:
-            return f"Error Increasing Status: {e}"
+            flash(f'Error Inserting Data: {e}', 'error')
+            return render_template('index.html')
     return render_template('index.html')
 
 @app.route('/display_supplier_info', methods=["POST"])
@@ -192,9 +201,13 @@ def display_supplier_info():
             cur.execute(sql)
             suppliers = cur.fetchall()
             cur.close()
+            if suppliers:
+                flash('Data Displayed Successfully', 'success')
+            
             return render_template('index.html', suppliers=suppliers)
         except Exception as e:
-            return f"Error displaying database: {e}"
+            flash('Error Inserting Data: {e}', 'error')
+            return render_template('index.html')
     return render_template('index.html')
 
 @app.route('/display_part_info', methods = ["POST", "GET"])
@@ -211,12 +224,17 @@ def display_part_info():
             '''
 
             cur.execute(sql, Pno)
-            suppliers = cur.fetchall()
+            supplier_for_parts = cur.fetchall()
             cur.close()
-            return render_template('index.html', suppliers=suppliers)
+            if supplier_for_parts:
+                flash('Data Displayed Successfully', 'success')
+           
+           
+            return render_template('index.html', supplier_for_parts=supplier_for_parts)
         
         except Exception as e:
-            return f"Error displaying data: {e}"
+            flash('Error Inserting Data: {e}', 'error')
+            return render_template('index.html')
     return render_template("index.html")
 
     
