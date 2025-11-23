@@ -20,6 +20,8 @@
                             </div>
                         {% endif %}
                     {% endwith %}
+
+                <!-- Question 1-->
                 <div class="Question">
                     <form id="question-one" class="active" method="POST" action="{{ url_for('insert_question_one') }}">
                         <h2>Q1 Insert a new tuple ('s2', 'p3', 200, 0.006) into SHIPMENT table </h2>
@@ -39,6 +41,7 @@
                     </form>
                 </div>
 
+                <!-- Question 2 -->
                 <div class="Question">
                     <form id="question-two" class="active" method="POST" action="{{ url_for('insert_question_two') }}">
                         <h2>Q2 Insert a new tuple ('s4', 'p2', 100, 0.005) into SHIPMENT table </h2>
@@ -58,6 +61,7 @@
                     </form>
                 </div>
 
+                <!--Question 3-->
                 <div class="Question">
                     <form method="POST" action="{{ url_for('increase_by_10') }}">
                         <h3>Increase the status of each supplier by 10%. </h3>
@@ -65,12 +69,13 @@
                     </form>
                 </div>
 
+                <!--Question 4-->
                  <div class="Question">
                     <form method="POST" action="{{ url_for('display_supplier_info') }}">
                         <h3>Display information of all suppliers. </h3>
                         <button class="sub-btn" type="submit">Display </button>
                     </form>
-                    
+                    <!--Table to display informatino-->
                     <div class="table-content">
                         {% if suppliers %}
                         <div class="sup-table">
@@ -99,6 +104,8 @@
                         {% endif %}
                     </div>
                 </div>
+
+                <!--Question 5-->
                 <div class="Question">
                      <form method="POST" action="{{ url_for('display_part_info') }}" >
                         <h3>Prompt the user to input part no, and display information of all suppliers who shipped </h3>
@@ -109,6 +116,7 @@
                     <div class="table-content">
                         {% if supplier_for_parts  %}
                         <div class="sup-table">
+                            <!--table to display information-->
                             <table class="supplier-table">
                                 <thead>
                                     <tr>
@@ -135,6 +143,7 @@
                     </div>
                 </div>
 
+                <!--Reset Database-->
                 <div class="Question">
                     <form method="POST" action="{{ url_for('reset_database') }}">
                         <h3>Reset Database to retry questions </h3>

@@ -17,6 +17,7 @@ mysql = pymysql.connect(
     db = app.config['MYSQL_DB']
 )
 
+# Creates table in MySQL workebench
 def create_table():
     try: 
         print('Creating Table Started =====')
@@ -64,6 +65,7 @@ def create_table():
     except Exception as e:
         print('Error creating Tables', e)
     
+# inserting the data into the tables 
 def data_insertion():
     try:
         cur = mysql.cursor()
@@ -122,7 +124,8 @@ def data_insertion():
 def index():
     return render_template('index.html')
 
-    
+
+# Routing for question 1 
 @app.route('/insert_question_one', methods=["GET", "POST"])
 def insert_question_one():
 
@@ -134,11 +137,16 @@ def insert_question_one():
 
         try:
             cur = mysql.cursor()
+
+            #Query to insert data
             sql = "Insert INTO Shipment (Sno, Pno, Qty, Price) VALUES (%s, %s, %s, %s)"
             cur.execute(sql, (Sno, Pno, Qty, Price))
             mysql.commit()
 
             cur.close
+
+
+            #flash messges
             flash('Data Inserted successfully', 'success')
             return redirect(url_for('index'))
         except Exception as e:
@@ -147,6 +155,7 @@ def insert_question_one():
     return render_template('index.html')
 
 
+#Routing for question 2
 @app.route('/insert_question_two', methods=["GET", "POST"])
 def insert_question_two():
 
@@ -158,12 +167,13 @@ def insert_question_two():
 
         try:
             cur = mysql.cursor()
+            # Query to insert data
             sql = "Insert INTO Shipment (Sno, Pno, Qty, Price) VALUES (%s, %s, %s, %s)"
+            #execute Query to insert
             cur.execute(sql, (Sno, Pno, Qty, Price))
             mysql.commit()
-
-
             cur.close()
+            # Flash messages
             flash('Shipment sucessfully inserted', 'success')
             return redirect(url_for('index'))
         except Exception as e:
@@ -172,19 +182,20 @@ def insert_question_two():
     return render_template('index.html')
 
     
-
+#Routing for question 3
 @app.route('/increase_by_10', methods=["GET", "POST"])
 def increase_by_10():
     
     if request.method == "POST":
         try:
             cur = mysql.cursor()
+            # Query to update status
             sql = "Update Supplier Set Status = status * 1.1"
             cur.execute(sql)
             mysql.commit()
 
             cur.close()
-
+            # flash messages
             flash('Status Sucessfully Increased!', 'success')
             return render_template('index.html')
         except Exception as e:
@@ -192,15 +203,19 @@ def increase_by_10():
             return render_template('index.html')
     return render_template('index.html')
 
+#Routing for question 4
 @app.route('/display_supplier_info', methods=["POST"])
 def display_supplier_info():
     if request.method == "POST":
         try:
             cur = mysql.cursor()
+            # Query to select info
             sql = "SELECT * FROM Supplier"
             cur.execute(sql)
             suppliers = cur.fetchall()
             cur.close()
+
+            #Flash message
             if suppliers:
                 flash('Data Displayed Successfully', 'success')
             
@@ -210,22 +225,26 @@ def display_supplier_info():
             return render_template('index.html')
     return render_template('index.html')
 
+#Routing for question 5
 @app.route('/display_part_info', methods = ["POST", "GET"])
 def display_part_info():
     if request.method == "POST":
         Pno = request.form["question-five-pno"]
         try:
             cur = mysql.cursor()
+            # Query to select data
             sql = '''
             SELECT * FROM Supplier 
             WHERE Sno IN (
-                SELECT Sno FROM Shipment WHERE Pno = %s
+                SELECT Sno FROM Shipment WHERE Pno = %s     
             )
             '''
-
+            # Execute query
             cur.execute(sql, Pno)
             supplier_for_parts = cur.fetchall()
             cur.close()
+
+            #Flash messages
             if supplier_for_parts:
                 flash('Data Displayed Successfully', 'success')
            
@@ -237,7 +256,7 @@ def display_part_info():
             return render_template('index.html')
     return render_template("index.html")
 
-    
+#Reseting the database  
 @app.route('/reset_database', methods=["GET", "POST"])
 def reset_database():
     if request.method == "POST":
