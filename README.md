@@ -1,5 +1,16 @@
 # DataBase-hw6
 
+URL LINK 
+DatabaseHW6 video
+Direct link: https://www.youtube.com/watch?v=HqHgZt7k63k
+
+GITHUB LINK
+Github-user-2468/DataBase-hw6
+HOW TO COMPILE 
+
+Python download :Download Python | Python.org
+VS Code download: Download Visual Studio Code - Mac, Linux, Windows
+
 This project updates the database and queries the data using flask, pymysql, HTML5, and CSS3
 
 ## To Prepare computer
