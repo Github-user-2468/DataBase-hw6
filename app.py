@@ -238,6 +238,28 @@ def display_part_info():
     return render_template("index.html")
 
     
+@app.route('/reset_database', methods=["GET", "POST"])
+def reset_database():
+    if request.method == "POST":
+        try:
+            cur = mysql.cursor()
+            cur.execute('DROP TABLE Shipment;')  
+            cur.execute('DROP TABLE Part;')      
+            cur.execute('DROP TABLE Supplier;') 
+            mysql.commit()
+
+            cur.close()
+            create_table()
+            data_insertion()
+
+            flash('Database reset!', 'success')
+            return render_template('index.html')
+        except Exception as e:
+            flash(f'Error Reseting Database: {e}', 'error')
+            return render_template('index.html')
+    return render_template('index.html')
+
+
 
 if __name__ == '__main__':
     create_table()

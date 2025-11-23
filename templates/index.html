@@ -106,7 +106,7 @@
                                 <input class="input-box" type="text" name="question-five-pno" required placeholder="Enter Pno">
                         <button class="sub-btn" type="submit">Search for Supplier </button>
                     </form>
-                <div class="table-content">
+                    <div class="table-content">
                         {% if supplier_for_parts  %}
                         <div class="sup-table">
                             <table class="supplier-table">
@@ -134,6 +134,14 @@
                         {% endif %}
                     </div>
                 </div>
+
+                <div class="Question">
+                    <form method="POST" action="{{ url_for('reset_database') }}">
+                        <h3>Reset Database to retry questions </h3>
+                        <button class="sub-btn" type="submit">Reset Database</button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </body>
