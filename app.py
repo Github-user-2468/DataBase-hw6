@@ -240,7 +240,7 @@ def display_part_info():
             )
             '''
             # Execute query
-            cur.execute(sql, Pno)
+            cur.execute(sql, (Pno,))
             supplier_for_parts = cur.fetchall()
             cur.close()
 
